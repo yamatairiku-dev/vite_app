@@ -1,23 +1,54 @@
 <script setup>
-  import { h } from 'vue'
+  defineProps({
+    title: String
+  })
 </script>
+
+<template>
+  <div class="alert alert-primary">
+    <h1>{{ title }}</h1>
+    <p>{{ outputMessage }}</p>
+    <hr>
+    <p class="h5">val: {{ val }}</p>
+    <div class="form-group text-left">
+      <label for="">* 2:</label>
+      <input type="number" v-model="a" class="form-control">
+    </div>
+    <div class="form-group text-left">
+      <label for="">^ 2:</label>
+      <input type="number" v-model="b" class="form-control">
+    </div>
+  </div>
+</template>
 
 <script>
   export default {
     data() {
       return {
-        title: 'HelloWorld',
-        outputMessage: 'This is sample message.'
+        val: 0,
+        outputMessage: '算術プロパティの利用'
       }
     },
-    render() {
-      return h('div', {
-        class: 'alert alert-info'
+    computed: {
+      a: {
+        get() {
+          return this.val * 2
+        },
+        set(value) {
+          this.val = Math.floor(value / 2)
+        }
       },
-      [
-        h('h2', this.title),
-        h('p', this.outputMessage)
-      ])
+      b: {
+        get() {
+          return this.val * this.val
+        },
+        set(value) {
+          this.val = Math.floor(Math.sqrt(value))
+        }
+      }
+    },
+    created() {
+      this.val = 10
     }
   }
 </script>

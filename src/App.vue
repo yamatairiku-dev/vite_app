@@ -1,7 +1,7 @@
 <script setup>
-  import HelloJSX from './components/HelloJSX'
+  import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <HelloJSX />
+  <HelloWorld title="computed" />
 </template>
