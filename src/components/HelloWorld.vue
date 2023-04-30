@@ -1,55 +1,63 @@
-<script setup>
-  defineProps({
-    title: String
-  })
-</script>
-
 <template>
   <div class="alert alert-primary">
     <h1>{{ title }}</h1>
-    <p>{{ outputMessage }}</p>
+    <pre v-on:click="clear" >{{ message }}</pre>
     <hr>
-    <p class="h5">val: {{ val }}</p>
-    <div class="form-group text-left">
-      <label for="">* 2:</label>
-      <input type="number" v-model="a" class="form-control">
-    </div>
-    <div class="form-group text-left">
-      <label for="">^ 2:</label>
-      <input type="number" v-model="b" class="form-control">
+    <div class="out" id="out" v-on:click="a_event">A
+      <div class="mid" id="mid" v-on:click="b_event">B
+        <div class="in" id="in" v-on:click="c_event">C
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    data() {
+    data: function() {
       return {
-        val: 0,
-        outputMessage: '算術プロパティの利用'
+        title: 'Event',
+        message: 'イベントの伝搬について。\n'
       }
     },
-    computed: {
-      a: {
-        get() {
-          return this.val * 2
-        },
-        set(value) {
-          this.val = Math.floor(value / 2)
-        }
+    methods: {
+      a_event(event) {
+        this.message += `A-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
       },
-      b: {
-        get() {
-          return this.val * this.val
-        },
-        set(value) {
-          this.val = Math.floor(Math.sqrt(value))
-        }
+      b_event(event) {
+        this.message += `B-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
+      },
+      c_event(event) {
+        this.message += `C-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
+      },
+      clear() {
+        this.message = 'イベントの伝搬について。\n'
       }
-    },
-    created() {
-      this.val = 10
     }
   }
 </script>
 
+<style>
+pre {
+  font-size: 16pt;
+  line-height: 1.25;
+}
+div.out {
+  padding: 0px;
+  background-color: #eee;
+  width: 300px;
+  height: 200px;
+}
+div.mid {
+  padding: 0px;
+  background-color: #ddd;
+  width: 200px;
+  height: 170px;
+}
+div.in {
+  padding: 0px;
+  background-color: #ccc;
+  width: 100px;
+  height: 140px;
+}
+</style>

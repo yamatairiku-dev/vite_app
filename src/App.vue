@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <HelloWorld title="computed" />
+  <HelloWorld />
 </template>
