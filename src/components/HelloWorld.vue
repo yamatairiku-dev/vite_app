@@ -1,63 +1,52 @@
 <template>
   <div class="alert alert-primary">
-    <h1>{{ title }}</h1>
-    <pre v-on:click="clear" >{{ message }}</pre>
-    <hr>
-    <div class="out" id="out" v-on:click="a_event">A
-      <div class="mid" id="mid" v-on:click="b_event">B
-        <div class="in" id="in" v-on:click="c_event">C
-        </div>
-      </div>
-    </div>
+    <h2>{{ title }}</h2>
+    <p>{{ message }}</p>
+    <button class="btn btn-primary m-3" v-on:click="doAction">
+      {{ btn }}
+    </button>
+    <transition name="transit">
+      <p v-if="flg" class="alert alert-light h5 trans">
+        Transition!
+      </p>
+    </transition>
   </div>
 </template>
 
 <script>
   export default {
-    data: function() {
+    name: 'HelloWorld',
+    data() {
       return {
-        title: 'Event',
-        message: 'イベントの伝搬について。\n'
+        title: 'Trans&Anim',
+        message: 'Transition sample!',
+        flg: true,
+        btn: 'Show/Hide'
       }
     },
     methods: {
-      a_event(event) {
-        this.message += `A-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
-      },
-      b_event(event) {
-        this.message += `B-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
-      },
-      c_event(event) {
-        this.message += `C-Event [${event.target.id} -> ${event.currentTarget.id}]\n`
-      },
-      clear() {
-        this.message = 'イベントの伝搬について。\n'
+      doAction() {
+        this.flg = !this.flg
       }
     }
   }
 </script>
 
 <style>
-pre {
-  font-size: 16pt;
-  line-height: 1.25;
+.trans {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
 }
-div.out {
-  padding: 0px;
-  background-color: #eee;
-  width: 300px;
-  height: 200px;
+.transit-enter-active {
+  transition: 1.0s;
 }
-div.mid {
-  padding: 0px;
-  background-color: #ddd;
-  width: 200px;
-  height: 170px;
+.transit-leave-active {
+  transition: 1.0s;
 }
-div.in {
-  padding: 0px;
-  background-color: #ccc;
-  width: 100px;
-  height: 140px;
+.trasit-enter, .transit-leave-to {
+  transform: translateX(200px) translateY(-200px);
+  opacity: 0.1;
 }
 </style>
